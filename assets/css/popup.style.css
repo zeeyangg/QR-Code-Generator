@@ -1,0 +1,96 @@
+html, body {
+  height:560px;  
+  overflow:hidden;
+}
+
+body {
+  font-size:12px;
+  font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  margin: 5px;
+  -webkit-user-select: none;
+  overflow:hidden;
+  width:350px;
+  background: #fafaff
+}
+#qrcode-title {font-size:16px;font-weight:bold;margin-bottom:5px;
+  text-overflow: ellipsis;
+  width: 320px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#qrcode-href {
+	width:320px;
+  height:122px;
+	border: 1px solid #C1C0B5;
+	border-color: #AAA #DDD #DDD #AAA;
+	background-color: #FAFAF0;
+	padding:3px;
+  outline:none;
+  visibility: hidden;
+}
+#qrcode-href:focus {
+  border-color: black;
+}
+
+button#qrcode-regenerate {
+	margin-top:15px;
+  cursor:pointer;
+	padding:11px 35px;
+	font-size:18px;
+	font-weight:bold;
+}
+button#qrcode-regenerate:hover {
+	color:#FF6;
+}
+button#qrcode-regenerate:active {
+  color:#FF6;
+  background:#339;
+}
+#qrcode-img-buffer {display:none}
+
+/* pure button
+Pure buttonf for the start button. we may decrease this later.
+ */
+.pure-button{display:block;zoom:1;line-height:normal;white-space:nowrap;vertical-align:baseline;text-align:center;cursor:pointer;-webkit-user-drag:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+.pure-button::-moz-focus-inner{padding:0;border:0}
+.pure-button{font-family:inherit;font-size:100%;*font-size:90%;*overflow:visible;padding:.5em 1em;color:#444;color:rgba(0,0,0,.8);*color:#444;border:1px solid #999;border:0 rgba(0,0,0,0);background-color:#E6E6E6;text-decoration:none;border-radius:2px}
+.pure-button-hover,.pure-button:hover,.pure-button:focus{filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1a000000', GradientType=0);background-image:-webkit-gradient(linear,0 0,0 100%,from(transparent),color-stop(40%,rgba(0,0,0,.05)),to(rgba(0,0,0,.1)));background-image:-webkit-linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1));background-image:-moz-linear-gradient(top,rgba(0,0,0,.05) 0,rgba(0,0,0,.1));background-image:-o-linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1));background-image:linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1))}
+.pure-button:focus{outline:0}
+.pure-button-active,
+.pure-button:active{box-shadow:0 0 0 1px rgba(0,0,0,.15) inset,0 0 6px rgba(0,0,0,.2) inset}
+.pure-button[disabled],.pure-button-disabled,.pure-button-disabled:hover,.pure-button-disabled:focus,.pure-button-disabled:active{border:0;background-image:none;filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);filter:alpha(opacity=40);-khtml-opacity:.4;-moz-opacity:.4;opacity:.4;cursor:not-allowed;box-shadow:none}
+.pure-button-hidden{display:none}
+.pure-button::-moz-focus-inner{padding:0;border:0}
+.pure-button-primary,.pure-button-selected,a.pure-button-primary,a.pure-button-selected{background-color:#0078e7;color:#fff}
+
+#qrcode-img {margin:25px 25px 9px 25px}
+
+a#export {font-size:10px;text-decoration: none; color:#999; cursor: pointer;display:inline-block;margin-top:5px;}
+a#export:hover {color:#000; background: #ffa}
+
+.popup-footer-right {
+  right:12px; color:#ccc;
+}
+.popup-footer-right a{
+  text-decoration:none; font-size:11px; color:#999
+}
+.popup-footer-right a:hover{
+  color:#333;
+}
+.popup-footer-left,.popup-footer-right {
+  position:absolute; bottom:31px;
+}
+.popup-footer-left { left:12px; color:#ccc; font-size: 10px
+}
+
+
+#version_text {display:none;}
+#settings {color:#999;text-decoration: none;padding:25px 25px 25px 0;}
+#settings svg {vertical-align: middle}
+#settings:hover {color:#000;}
+#settings:hover svg path{
+  fill:#000;
+}
+
+#ctxt-only {display: none}
+.ctxt-only-style {text-align: center;position: initial;margin:0 auto;display: block;margin-top: 25px}

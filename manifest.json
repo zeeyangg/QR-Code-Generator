@@ -1,0 +1,26 @@
+{
+   "background": {
+      "page": "background.html"
+   },
+   "browser_action": {
+      "default_icon": "icon_19.png",
+      "default_popup": "popup.html",
+      "default_title": "Quick QR Code Generator!"
+   },
+   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+   "description": "A super handy QR Code Generator / Creator for you.",
+   "icons": {
+      "128": "icon_128.png",
+      "19": "icon_19.png",
+      "48": "icon_48.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDBFV/XvzWUOKopgHSzCB1lfuiiv6vYzwOFgHHQZ+qONn/+mCdlxNnk2ui5seljAOg3bkXecjmt4D4eUfvau2MR+Ywg0nHh6X/u0jTfS1rPaMsD63cvG5/tNVsECh1roxd10TpOoa3v5cfkSdjFxY7eoHggKfJmTBnT9GeqJl2iPQIDAQAB",
+   "manifest_version": 2,
+   "minimum_chrome_version": "19",
+   "name": "Quick QR Code Generator",
+   "options_page": "options.html",
+   "permissions": [ "tabs", "contextMenus" ],
+   "short_name": "Quick QR",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "6.11"
+}

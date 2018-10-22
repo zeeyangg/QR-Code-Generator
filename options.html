@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="assets/js/jquery.js"></script>
+<script type="text/javascript" src="assets/js/options.js"></script>
+<link rel='stylesheet' href='assets/css/bootstrap.min.css' type='text/css' media='all' />
+<link rel='stylesheet' href='assets/css/options.style.css' type='text/css' media='all' />
+<script src="assets/js/bootstrap-colorpicker.min.js"></script>
+<link href="assets/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+</head>
+<body>
+<h1><img src='icon_19.png'></img> Quick QR <span id="version_span"></span>
+<b>(Download this extension <a target="_blank" href="https://chrome.google.com/webstore/detail/quick-qr-code-generator/afpbjjgbdimpioenaedcjgkaigggcdpp">here</a>)
+</b></h1>
+
+<iframe id="fbifm" src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fquickqr&width=330&layout=standard&action=recommend&size=small&show_faces=true&share=true&height=80&appId=1851840378380464" width="330" height="80" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+
+<div id="form">
+  <div class="form-group">
+    <label for="img-size">Size of the download image (px):</label>
+    <input type="text" class="form-control" id="img-size" placeholder="300" value="300">
+  </div>
+
+
+
+  <label for="cp1">Foreground Color:</label>
+  <div id="cp1" class="input-group colorpicker-component">
+    <input type="text" value="#000000" class="form-control" />
+    <span class="input-group-addon"><i></i></span>
+	</div>
+  <p></p>
+  
+
+
+
+  <label for="cp2">Background Color:</label>
+  <div id="cp2" class="input-group colorpicker-component">
+    <input type="text" value="#FFFFFF" class="form-control" />
+    <span class="input-group-addon"><i></i></span>
+	</div>
+
+
+
+
+
+
+  <div class="checkbox">
+    <label>
+      <input id="transbg" type="checkbox"> Transparent Background
+    </label>
+  </div>
+
+
+  <button id="save" type="submit" class="btn btn-default">Save</button> 
+
+</div>
+
+<p>
+	<a href="popup.html" id='back-form'>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 26.676 26.676" style="enable-background:new 0 0 26.676 26.676;" xml:space="preserve" width="15px" height="15px">
+<g>
+  <path d="M26.105,21.891c-0.229,0-0.439-0.131-0.529-0.346l0,0c-0.066-0.156-1.716-3.857-7.885-4.59   c-1.285-0.156-2.824-0.236-4.693-0.25v4.613c0,0.213-0.115,0.406-0.304,0.508c-0.188,0.098-0.413,0.084-0.588-0.033L0.254,13.815   C0.094,13.708,0,13.528,0,13.339c0-0.191,0.094-0.365,0.254-0.477l11.857-7.979c0.175-0.121,0.398-0.129,0.588-0.029   c0.19,0.102,0.303,0.295,0.303,0.502v4.293c2.578,0.336,13.674,2.33,13.674,11.674c0,0.271-0.191,0.508-0.459,0.562   C26.18,21.891,26.141,21.891,26.105,21.891z" fill="#999999"/>
+</svg>
+
+  back</a>
+  <span id='show-form'>Suggestion Box</span>
+  <a id='hotkey-settings'>
+
+
+
+
+<svg version="1.1" width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+   width="438.536px" height="438.536px" viewBox="0 0 438.536 438.536"
+   xml:space="preserve">
+<g>
+  <path fill="#999999" d="M414.41,24.123C398.333,8.042,378.963,0,356.315,0H82.228C59.58,0,40.21,8.042,24.126,24.123
+    C8.045,40.207,0.003,59.576,0.003,82.225v274.084c0,22.647,8.042,42.018,24.123,58.102c16.084,16.084,35.454,24.126,58.102,24.126
+    h274.084c22.648,0,42.018-8.042,58.095-24.126c16.084-16.084,24.126-35.454,24.126-58.102V82.225
+    C438.532,59.576,430.49,40.204,414.41,24.123z M365.449,228.402c0,7.994-3.717,13.606-11.136,16.844
+    c-2.471,0.951-4.859,1.427-7.139,1.427c-5.134,0-9.418-1.811-12.847-5.424l-41.11-41.112L140.764,352.599
+    c-3.621,3.614-7.9,5.425-12.85,5.425c-4.952,0-9.235-1.811-12.851-5.425l-29.121-29.126c-3.617-3.61-5.426-7.901-5.426-12.847
+    c0-4.944,1.809-9.229,5.426-12.843l152.462-152.464l-41.113-41.112c-5.902-5.52-7.233-12.178-3.999-19.985
+    c3.234-7.421,8.852-11.136,16.846-11.136h137.037c4.948,0,9.232,1.81,12.854,5.428c3.613,3.614,5.421,7.898,5.421,12.847V228.402z"
+    />
+</g>
+</svg>
+<span>Hotkey</span></a>
+  <span class='facebook-page'> | <a href="https://www.facebook.com/quickqr" target="_blank">Facebook Page</a></span>
+</p>
+
+<iframe id="ggifm" src="https://docs.google.com/forms/d/e/1FAIpQLSe3uPq9Tp7MIatsvo7cx1l-IzbadnB1wJywBqzIAv9FAs-a1Q/viewform?embedded=true" width="760" height="990" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</body>
+</html>
