@@ -8,6 +8,8 @@ var img_history;
 var text_history
 var qr_history = [];
 
+
+
 $(function () {
   var config_obj = JSON.parse(localStorage.getItem('config')) || {};
   fore_bg = config_obj.fore_bg || '#000000';
