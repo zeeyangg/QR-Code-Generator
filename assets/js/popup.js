@@ -72,13 +72,36 @@ function renderQRHandler(){
   trackContent('click:'+href);
 }
 
-// QR code history
+document.addEventListener('DOMContentLoaded', function() {
+    getQRHistory();
+});
+
+// QR code history function
 function addQRHistory(){
 	qr_history.push({
 		"img": img_history,
 		"text": text_history
 	});
+	saveQRHistory();
 	console.log(qr_history);
+}
+
+// Save QR history
+function saveQRHistory(callback){
+	chrome.storage.local.set({qr_history}, function(){
+		if(typeof callback === 'function'){
+			//If there was no callback provided, don't try to call it.
+			callback();
+		}
+	});
+}
+
+// Restore QR history
+function getQRHistory(){
+	chrome.storage.local.get({qr_history:[]}, function(data){
+		qr_history = data.qr_history;
+		console.log(qr_history);
+	});
 }
 
 function updateContentByTabs(tabs) {
