@@ -4,6 +4,10 @@ var back_bg;
 var img_size;
 var is_transparnet_bg;
 
+var img_history;
+var text_history
+var qr_history = [];
+
 $(function () {
   var config_obj = JSON.parse(localStorage.getItem('config')) || {};
   fore_bg = config_obj.fore_bg || '#000000';
@@ -18,6 +22,7 @@ $(function () {
 
   chrome.tabs.query({active:true, currentWindow:true}, updateContentByTabs);
   $("#qrcode-regenerate").click(renderQRHandler);
+  $("#qrcode-history").click(addQRHistory);
   $('#version').text(chrome.app.getDetails().version);
   $('#credit_get').click(function(){
     trackContent('credit:get_this');
@@ -51,6 +56,7 @@ $(function () {
       if($('#qrcode-href')){
         $('#qrcode-href').val(c);
         $('#qrcode-regenerate').click();
+		$('#qrcode-history').click();
         clearInterval(check);        
       }
     }, 99);
@@ -65,6 +71,16 @@ function renderQRHandler(){
   updateImgHref();
   trackContent('click:'+href);
 }
+
+// QR code history
+function addQRHistory(){
+	qr_history.push({
+		"img": img_history,
+		"text": text_history
+	});
+	console.log(qr_history);
+}
+
 function updateContentByTabs(tabs) {
     var href = tabs[0].url;
     var title = tabs[0].title;
@@ -78,6 +94,7 @@ function updateContentByTabs(tabs) {
     trackContent('init:'+href);
 }
 function renderQR($el, the_size, the_text){
+  text_history = the_text;
   var quiet = '0';
   if(back_bg != '#ffffff') {
     quiet = '1';
@@ -111,6 +128,8 @@ function updateImgHref() {
   var link = $("#export")[0];
   link.download = 'exported_qrcode_image.png';/// set a filename or a default
   link.href = $('#qrcode-img-buffer > canvas')[0].toDataURL();
+  
+  img_history = link.href;
 }
 
 // Tracker
