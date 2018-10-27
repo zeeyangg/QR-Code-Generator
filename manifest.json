@@ -19,7 +19,7 @@
    "minimum_chrome_version": "19",
    "name": "Quick QR Code Generator",
    "options_page": "options.html",
-   "permissions": [ "tabs", "contextMenus" ],
+   "permissions": [ "tabs", "contextMenus", "storage" ],
    "short_name": "Quick QR",
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "6.11"
