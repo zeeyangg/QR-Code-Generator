@@ -3,10 +3,13 @@ var fore_bg;
 var back_bg;
 var img_size;
 var is_transparnet_bg;
+var currentdata;
 
 var img_history;
 var text_history
 var qr_history = [];
+
+
 
 $(function () {
   var config_obj = JSON.parse(localStorage.getItem('config')) || {};
@@ -14,27 +17,29 @@ $(function () {
   back_bg = config_obj.back_bg || '#ffffff';
   img_size = config_obj.size;
   is_transparnet_bg = config_obj.is_transparnet_bg;
-  
-  setTimeout(function(){
+
+  setTimeout(function () {
     $('#qrcode-href').css('visibility', 'visible').focus().select();
-  },99);
+  }, 99);
 
 
-  chrome.tabs.query({active:true, currentWindow:true}, updateContentByTabs);
+  chrome.tabs.query({ active: true, currentWindow: true }, updateContentByTabs);
   $("#qrcode-regenerate").click(renderQRHandler);
   $("#qrcode-history").click(addQRHistory);
+  $("#qrcode-checkhistory").click(hideandseek);
+  $("#qrcode-checkhistory").click(checkQRhistory);
   $('#version').text(chrome.app.getDetails().version);
-  $('#credit_get').click(function(){
+  $('#credit_get').click(function () {
     trackContent('credit:get_this');
   })
-  $('#credit_support').click(function(){
+  $('#credit_support').click(function () {
     trackContent('credit:support');
   })
   // Not firing when paste by mouse.
-  $('#qrcode-href').on('keydown', function(){
+  $('#qrcode-href').on('keydown', function () {
     renderQRHandler();
   })
-  $('#qrcode-href').on('keyup', function(e){
+  $('#qrcode-href').on('keyup', function (e) {
     renderQRHandler();
     //---      if(e.keyCode == 13){
     //---        var currentText = $('#qrcode-href').val();
@@ -44,7 +49,7 @@ $(function () {
     //---      }
   })
 
-  if(window.location.search.includes('?c=')){
+  if (window.location.search.includes('?c=')) {
     $('body').css('margin', '0 auto');
     $('body').css('height', 'auto');
     $('#settings').hide();
@@ -52,25 +57,27 @@ $(function () {
     $('.popup-footer-right').appendTo('body').addClass('ctxt-only-style');
     var c = window.location.search.split('?c=')[1];
     c = decodeURIComponent(c);
-    var check = setInterval(function(){
-      if($('#qrcode-href')){
+    var check = setInterval(function () {
+      if ($('#qrcode-href')) {
         $('#qrcode-href').val(c);
         $('#qrcode-regenerate').click();
-		$('#qrcode-history').click();
-        clearInterval(check);        
+        $('#qrcode-history').click();
+        $('#qrcode-checkhistory').click();
+        clearInterval(check);
       }
     }, 99);
   }
 });
 // Button press handler
-function renderQRHandler(){
+function renderQRHandler() {
   var href = $("#qrcode-href").val();
   var $qrcode_img = $('#qrcode-img');
   $qrcode_img.html('');
   renderQR($qrcode_img, QR_SIZE, href);
   updateImgHref();
-  trackContent('click:'+href);
+  trackContent('click:' + href);
 }
+
 
 document.addEventListener('DOMContentLoaded', function() {
     getQRHistory();
@@ -84,6 +91,37 @@ function addQRHistory(){
 	});
 	saveQRHistory();
 	console.log(qr_history);
+
+// Check history array
+function checkQRhistory() {
+  if (qr_history.length > 0) {
+    var doc = document;
+
+    var fragment = doc.createDocumentFragment();
+
+    for (i = 0; i < qr_history.length; i++) {
+
+      var tr = doc.createElement("tr");
+      var td = doc.createElement("td");
+      var data = qr_history[i].text;
+      td.innerHTML = data;
+
+      tr.appendChild(td);
+
+      //does not trigger reflow
+      fragment.appendChild(tr);
+    }
+
+    var table = doc.createElement("table");
+
+    table.appendChild(fragment);
+
+    doc.getElementById("history_table").appendChild(table);
+  } else {
+    var theDiv = document.getElementById("history_table");
+    var content = document.createTextNode("Add data the history first");
+    theDiv.appendChild(content);
+  }
 }
 
 // Save QR history
@@ -105,43 +143,43 @@ function getQRHistory(){
 }
 
 function updateContentByTabs(tabs) {
-    var href = tabs[0].url;
-    var title = tabs[0].title;
-    var $qrcode_img = $('#qrcode-img');
-    setTimeout(function() {
-      $qrcode_img.html('');
-      renderQR($qrcode_img, QR_SIZE, href);
-      updateImgHref();
-    }, 70);
-    $('#qrcode-href').val(href);
-    trackContent('init:'+href);
+  var href = tabs[0].url;
+  var title = tabs[0].title;
+  var $qrcode_img = $('#qrcode-img');
+  setTimeout(function () {
+    $qrcode_img.html('');
+    renderQR($qrcode_img, QR_SIZE, href);
+    updateImgHref();
+  }, 70);
+  $('#qrcode-href').val(href);
+  trackContent('init:' + href);
 }
-function renderQR($el, the_size, the_text){
+function renderQR($el, the_size, the_text) {
   text_history = the_text;
   var quiet = '0';
-  if(back_bg != '#ffffff') {
+  if (back_bg != '#ffffff') {
     quiet = '1';
   }
   //console.log(is_transparnet_bg);
   if (is_transparnet_bg) {
     back_bg = null;
   }
-  $el.qrcode(qrObjectBuilder(the_size, fore_bg, the_text, back_bg,quiet));
-  $('#qrcode-img-buffer').empty().qrcode(qrObjectBuilder(the_size, fore_bg, the_text, back_bg,0, true));
+  $el.qrcode(qrObjectBuilder(the_size, fore_bg, the_text, back_bg, quiet));
+  $('#qrcode-img-buffer').empty().qrcode(qrObjectBuilder(the_size, fore_bg, the_text, back_bg, 0, true));
 }
-function qrObjectBuilder(s,f,t,b,q,c){
+function qrObjectBuilder(s, f, t, b, q, c) {
   var r = 'image';
   if (c) {
     r = 'canvas';
   }
   //ecLevel: 'L',
   var o = {
-    'render':r,
-    size:s,
-    fill:f,
-    text:t,
-    background:b,
-    'quiet':q
+    'render': r,
+    size: s,
+    fill: f,
+    text: t,
+    background: b,
+    'quiet': q
   }
   //'L', 'M', 'Q' or 'H'
   o.ecLevel = 'L';
@@ -151,12 +189,24 @@ function updateImgHref() {
   var link = $("#export")[0];
   link.download = 'exported_qrcode_image.png';/// set a filename or a default
   link.href = $('#qrcode-img-buffer > canvas')[0].toDataURL();
-  
+
   img_history = link.href;
 }
 
 // Tracker
 function trackContent(c) {
-  chrome.extension.sendMessage({pop: c}, function(response) {
+  chrome.extension.sendMessage({ pop: c }, function (response) {
   });
+}
+
+function hideandseek() {
+  var x = document.getElementById("main-menu");
+  var y = document.getElementById("history-menu");
+  if (x.style.display == 'none') {
+    x.style.display = 'block';
+    y.style.display = 'none';
+  } else if (x.style.display != 'none') {
+    x.style.display = 'none';
+    y.style.display = 'block';
+  }
 }
