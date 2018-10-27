@@ -28,6 +28,7 @@ $(function () {
   $("#qrcode-history").click(addQRHistory);
   $("#qrcode-checkhistory").click(hideandseek);
   $("#qrcode-checkhistory").click(checkQRhistory);
+  $("#qrcode-clear-history").click(clearHistory);
   $('#version').text(chrome.app.getDetails().version);
   $('#credit_get').click(function () {
     trackContent('credit:get_this');
@@ -63,6 +64,7 @@ $(function () {
         $('#qrcode-regenerate').click();
         $('#qrcode-history').click();
         $('#qrcode-checkhistory').click();
+		$('#qrcode-clear-history').click();
         clearInterval(check);
       }
     }, 99);
@@ -91,6 +93,7 @@ function addQRHistory(){
 	});
 	saveQRHistory();
 	console.log(qr_history);
+}
 
 // Check history array
 function checkQRhistory() {
@@ -140,6 +143,12 @@ function getQRHistory(){
 		qr_history = data.qr_history;
 		console.log(qr_history);
 	});
+}
+
+// Clear history
+function clearHistory(){
+	qr_history = [];
+	saveQRHistory();
 }
 
 function updateContentByTabs(tabs) {
