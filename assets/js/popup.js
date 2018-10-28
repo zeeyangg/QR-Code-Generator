@@ -32,6 +32,7 @@ $(function () {
   $("#return-menu").click(hideandseekbuttons);
   $("#return-menu").click(checkQRhistory);
   $("#return-menu").click(hideandseek);
+  $("#choice").click(optionChose);
   $('#version').text(chrome.app.getDetails().version);
   $('#credit_get').click(function () {
     trackContent('credit:get_this');
@@ -68,6 +69,7 @@ $(function () {
         $('#qrcode-history').click();
         $('#qrcode-checkhistory').click();
         $('#return-menu').click();
+        $("#choice").click();
         clearInterval(check);
       }
     }, 99);
@@ -99,7 +101,7 @@ function addQRHistory(){
 }
 // Check history array
 function checkQRhistory() {
-  $("#history_table").find("table").remove();
+  $("#history_table").find("select").remove();
 
   if (qr_history.length > 0) {
     var doc = document;
@@ -108,22 +110,20 @@ function checkQRhistory() {
 
     for (i = 0; i < qr_history.length; i++) {
 
-      var tr = doc.createElement("tr");
-      var td = doc.createElement("td");
+      var option = doc.createElement("option");
       var data = qr_history[i].text;
-      td.innerHTML = data;
-
-      tr.appendChild(td);
+      option.innerHTML = data;    
 
       //does not trigger reflow
-      fragment.appendChild(tr);
+      fragment.appendChild(option);
     }
 
-    var table = doc.createElement("table");
+    var select = doc.createElement("select");
+    select.setAttribute('id', 'choice');
+    select.setAttribute('multiple', 'multiple');
+    select.appendChild(fragment);
 
-    table.appendChild(fragment);
-
-    doc.getElementById("history_table").appendChild(table);
+    doc.getElementById("history_table").appendChild(select);
   } else {
     var theDiv = document.getElementById("history_table");
     var content = document.createTextNode("Add data the history first");
@@ -131,7 +131,22 @@ function checkQRhistory() {
   }
 }
 
+function optionChose(){
 
+  var choiceValues = $( "#choice" ).val();
+  console.log(choiceValues);
+  $('#qrcode-href').val(choiceValues);
+  renderQRHandler();
+  var a = document.getElementById("qrcode-checkhistory");
+  var b = document.getElementById("return-menu");
+  var x = document.getElementById("main-menu");
+  var y = document.getElementById("history-menu");
+  x.style.display = 'none';
+  y.style.display = 'block';
+  a.style.display = 'none';
+  b.style.display = 'block';
+
+}
 // Save QR history
 function saveQRHistory(callback){
 	chrome.storage.local.set({qr_history}, function(){
