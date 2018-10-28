@@ -63,7 +63,53 @@ Pure buttonf for the start button. we may decrease this later.
 .pure-button::-moz-focus-inner{padding:0;border:0}
 .pure-button-primary,.pure-button-selected,a.pure-button-primary,a.pure-button-selected{background-color:#0078e7;color:#fff}
 
-#qrcode-img {margin:25px 25px 9px 25px}
+#qrcode-img {margin:9px 25px 9px 25px}
+
+#qrcode-checkhistory {
+	background-color: #e7e7e7;
+	border: none;
+	width: 300px;
+	font-size: 15px;
+	cursor: pointer;
+	outline: none;
+	margin: 0px 0px 6px 0px;
+	padding: 5px 0px;
+}
+
+#qrcode-checkhistory:hover, #qrcode-history:hover {
+	background-color: #e3e3e3;
+}
+
+#qrcode-checkhistory:active, #qrcode-history:active {
+	background-color: #d1d1d1;
+}
+
+#qrcode-history {
+	background-color: #e7e7e7;
+	border: none;
+	font-size: 15px;
+	outline: none;
+	cursor: pointer;
+	padding: 5px 10px;
+	margin: 10px 0px;
+}
+
+#qrcode-clear-history {
+	background: none;
+	border: none;
+	margin: 10px 0px 0px 0px;
+	outline: none;
+}
+
+#qrcode-clear-history:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+#qrcode-clear-history:active {
+	color: gray;
+	text-decoration: underline:
+}
 
 a#export {font-size:10px;text-decoration: none; color:#999; cursor: pointer;display:inline-block;margin-top:5px;}
 a#export:hover {color:#000; background: #ffa}
@@ -94,3 +140,28 @@ a#export:hover {color:#000; background: #ffa}
 
 #ctxt-only {display: none}
 .ctxt-only-style {text-align: center;position: initial;margin:0 auto;display: block;margin-top: 25px}
+
+tr:hover {
+	cursor: pointer;
+}
+
+#history-menu {
+	margin: 0 auto;
+	height: 490px;
+	width: 300px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+	
+td {
+	word-break: break-word;
+	min-width: 80px;
+}
+	
+img {
+	backface-visibility: hidden;
+}
+	
+::-webkit-scrollbar {
+	display: none;
+}

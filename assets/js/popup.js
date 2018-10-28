@@ -6,7 +6,7 @@ var is_transparnet_bg;
 var currentdata;
 
 var img_history;
-var text_history
+var text_history;
 var qr_history = [];
 
 
@@ -28,10 +28,7 @@ $(function () {
   $("#qrcode-history").click(addQRHistory);
   $("#qrcode-checkhistory").click(hideandseek);
   $("#qrcode-checkhistory").click(checkQRhistory);
-  $("#qrcode-checkhistory").click(hideandseekbuttons);
-  $("#return-menu").click(hideandseekbuttons);
-  $("#return-menu").click(checkQRhistory);
-  $("#return-menu").click(hideandseek);
+  $("#qrcode-clear-history").click(clearHistory);
   $('#version').text(chrome.app.getDetails().version);
   $('#credit_get').click(function () {
     trackContent('credit:get_this');
@@ -67,8 +64,7 @@ $(function () {
         $('#qrcode-regenerate').click();
         $('#qrcode-history').click();
         $('#qrcode-checkhistory').click();
-        $('#return-menu').click();
-        $("#choice").click();
+		$('#qrcode-clear-history').click();
         clearInterval(check);
       }
     }, 99);
@@ -85,23 +81,36 @@ function renderQRHandler() {
 }
 
 
-document.addEventListener('DOMContentLoaded', function () {
-  getQRHistory();
+document.addEventListener('DOMContentLoaded', function() {
+    getQRHistory();
 });
 
 // QR code history function
-function addQRHistory() {
-  qr_history.push({
-    "img": img_history,
-    "text": text_history
-  });
-  saveQRHistory();
-  console.log(qr_history);
+function addQRHistory(){
+	//var currentdate = new Date().toString();
+	var options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+	var currentdate = new Date().toLocaleDateString("en", options);
+	if (!qr_history.some(e => e.text == text_history)) {
+		qr_history.push({
+			"img": img_history,
+			"text": text_history,
+			"date": currentdate
+		});
+		saveQRHistory();
+		console.log(qr_history);
+	} else {
+		alert("Already exist");
+	}
+	
+	saveQRHistory();
+	//console.log(qr_history);
 }
+
 // Check history array
 function checkQRhistory() {
-  $("#history_table").find("select").remove();
-
+	
+  $("#history_table").find("table").remove();
+  
   if (qr_history.length > 0) {
     var doc = document;
 
@@ -109,54 +118,91 @@ function checkQRhistory() {
 
     for (i = 0; i < qr_history.length; i++) {
 
-      var option = doc.createElement("option");
-      var data = qr_history[i].text;
-      option.innerHTML = data;
+      var tr = doc.createElement("tr");
+      var td = doc.createElement("td");
+	  td.rowSpan = 2;
+      var data = "<img src=" + qr_history[i].img + " width='70' height='70'>";
+      td.innerHTML = data;
 
+      tr.appendChild(td);
+	  
+	  td = doc.createElement("td");
+	  data = qr_history[i].text;
+	  td.innerHTML = data;
+	  
+	  tr.appendChild(td);
+	  
       //does not trigger reflow
-      fragment.appendChild(option);
+      fragment.appendChild(tr);
+	  
+	  tr = doc.createElement("tr");
+	  td = doc.createElement("td");
+	  data = qr_history[i].date
+	  td.innerHTML = data;
+	  
+	  tr.appendChild(td);
+	  fragment.appendChild(tr);
     }
 
-    var select = doc.createElement("select");
-    select.setAttribute('id', 'choice');
-    select.setAttribute('multiple', 'multiple');
-    select.appendChild(fragment);
+    var table = doc.createElement("table");
 
-    doc.getElementById("history_table").appendChild(select);
+    table.appendChild(fragment);
+
+    doc.getElementById("history_table").appendChild(table);
   } else {
-    var theDiv = document.getElementById("history_table");
-    var content = document.createTextNode("Add data the history first");
-    theDiv.appendChild(content);
+	var theDiv = document.getElementById("history_table");
+	var tr2 = document.createElement("tr");
+	var td2 = document.createElement("td");
+	var data2 = "Add data to history first";
+	td2.innerHTML = data2;
+	
+	tr2.appendChild(td2);
+	var table2 = document.createElement("table");
+	table2.appendChild(tr2);
+    document.getElementById("history_table").appendChild(table2);
   }
-  $("#choice").click(optionChose);
-}
-
-function optionChose() {
-
-  var choiceValues = $("#choice").val();
-  console.log(choiceValues);
-  $('#qrcode-href').val(choiceValues);
-  renderQRHandler();
-  hideandseek();
-  hideandseekbuttons();
-
-}
-// Save QR history
-function saveQRHistory(callback) {
-  chrome.storage.local.set({ qr_history }, function () {
-    if (typeof callback === 'function') {
-      //If there was no callback provided, don't try to call it.
-      callback();
-    }
+  $('#history_table').find('tr').on('click', function(){
+		//console.log($(this).text());
+		hideandseek();
+		$('#qrcode-href').val($(this).text());
+		renderQRHandler();
   });
+}
+
+// Save QR history
+function saveQRHistory(callback){
+	chrome.storage.local.set({qr_history}, function(){
+		if(typeof callback === 'function'){
+			//If there was no callback provided, don't try to call it.
+			callback();
+		}
+	});
 }
 
 // Restore QR history
-function getQRHistory() {
-  chrome.storage.local.get({ qr_history: [] }, function (data) {
-    qr_history = data.qr_history;
-    console.log(qr_history);
-  });
+function getQRHistory(){
+	chrome.storage.local.get({qr_history:[]}, function(data){
+		qr_history = data.qr_history;
+		console.log(qr_history);
+	});
+}
+
+// Clear history
+function clearHistory(){
+	qr_history = [];
+	saveQRHistory();
+	$("#history_table").find("table").remove();
+	
+	var theDiv = document.getElementById("history_table");
+	var tr2 = document.createElement("tr");
+	var td2 = document.createElement("td");
+	var data2 = "Add data to history first";
+	td2.innerHTML = data2;
+	
+	tr2.appendChild(td2);
+	var table2 = document.createElement("table");
+	table2.appendChild(tr2);
+    document.getElementById("history_table").appendChild(table2);
 }
 
 function updateContentByTabs(tabs) {
@@ -217,25 +263,19 @@ function trackContent(c) {
 }
 
 function hideandseek() {
+  var w = document.getElementById("qrcode-clear-history");
   var x = document.getElementById("main-menu");
   var y = document.getElementById("history-menu");
+  var z = document.getElementById("qrcode-checkhistory");
   if (x.style.display == 'none') {
+	w.style.display = 'none';
     x.style.display = 'block';
     y.style.display = 'none';
+	z.textContent = "Check History";
   } else if (x.style.display != 'none') {
+	w.style.display = 'block';
     x.style.display = 'none';
     y.style.display = 'block';
-  }
-}
-
-function hideandseekbuttons() {
-  var a = document.getElementById("qrcode-checkhistory");
-  var b = document.getElementById("return-menu");
-  if (a.style.display == 'none') {
-    a.style.display = 'block';
-    b.style.display = 'none';
-  } else if (a.style.display != 'none') {
-    a.style.display = 'none';
-    b.style.display = 'block';
+	z.textContent = "Back";
   }
 }

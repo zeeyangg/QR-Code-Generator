@@ -4,14 +4,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script type="text/javascript" src="assets/js/jquery.js"></script>
-
     <script type="text/javascript" src="assets/js/jqr.js"></script>
     <link rel='stylesheet' href='assets/css/popup.style.css' type='text/css' media='all' />
 </head>
 
 <body>
-    <button id="qrcode-checkhistory">Check history</button>
-    <button id="return-menu">Back</button>
+	<div style="text-align:center;">
+		<button id="qrcode-checkhistory">Check History</button>
+	</div>
+	<!--- <button id="qrcode-clear-history">Clear History</button> --->
     <div id="main-menu">
         <center>
 
@@ -20,9 +21,11 @@
             <div id="qrcode-img-buffer"></div>
             <div id="qrcode-title"></div>
             <textarea id="qrcode-href" value=""></textarea>
-            <button id="qrcode-regenerate" class='pure-button pure-button-primary'>QR!</button>
+            <!--- <button id="qrcode-regenerate" class='pure-button pure-button-primary'>QR!</button> --->
             <button id="qrcode-history">Save to History</button>
-            <a id="export">Save image</a>
+			<div>
+				<a id="export">Save image</a>
+			</div>
             <span class="popup-footer-right">
                 <a id="credit_get" target="_blank" href="https://chrome.google.com/webstore/detail/quick-qr/afpbjjgbdimpioenaedcjgkaigggcdpp">Get
                     this</a>
@@ -49,6 +52,11 @@
             <div id="history_table"></div>
         </center>
     </div>
+	<div>
+		<center>
+			<button id="qrcode-clear-history" style="display:none">Clear History</button>
+		</center>
+	</div>
     <script type="text/javascript" src="assets/js/popup.js"></script>
 
 </body>
