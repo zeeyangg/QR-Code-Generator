@@ -99,9 +99,14 @@ function addQRHistory(){
 		saveQRHistory();
 		console.log(qr_history);
 	} else {
-		alert("Already exist");
+		//alert("Already exist");
 	}
-	
+  
+	var x = document.getElementById("qrcode-history");
+	x.style.background = "green";
+	x.style.color = "white";
+	x.textContent = "Saved";  
+  
 	saveQRHistory();
 	//console.log(qr_history);
 }
@@ -160,6 +165,11 @@ function checkQRhistory() {
 	var table2 = document.createElement("table");
 	table2.appendChild(tr2);
     document.getElementById("history_table").appendChild(table2);
+	
+	var x = document.getElementById("qrcode-history");
+	x.style.background = "#e7e7e7";
+	x.style.color = "black";
+	x.textContent = "Save to History";
   }
   $('#history_table').find('tr').on('click', function(){
 		//console.log($(this).text());
@@ -219,6 +229,17 @@ function updateContentByTabs(tabs) {
 }
 function renderQR($el, the_size, the_text) {
   text_history = the_text;
+  if (!qr_history.some(e => e.text == text_history)) {
+	var x = document.getElementById("qrcode-history");
+	x.style.background = "#e7e7e7";
+	x.style.color = "black";
+	x.textContent = "Save to History";
+  } else {
+	var x = document.getElementById("qrcode-history");
+	x.style.background = "green";
+	x.style.color = "white";
+	x.textContent = "Saved";  
+  }
   var quiet = '0';
   if (back_bg != '#ffffff') {
     quiet = '1';
