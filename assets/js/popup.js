@@ -32,7 +32,6 @@ $(function () {
   $("#return-menu").click(hideandseekbuttons);
   $("#return-menu").click(checkQRhistory);
   $("#return-menu").click(hideandseek);
-  $("#choice").click(optionChose);
   $('#version').text(chrome.app.getDetails().version);
   $('#credit_get').click(function () {
     trackContent('credit:get_this');
@@ -86,18 +85,18 @@ function renderQRHandler() {
 }
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    getQRHistory();
+document.addEventListener('DOMContentLoaded', function () {
+  getQRHistory();
 });
 
 // QR code history function
-function addQRHistory(){
-	qr_history.push({
-		"img": img_history,
-		"text": text_history
-	});
-	saveQRHistory();
-	console.log(qr_history);
+function addQRHistory() {
+  qr_history.push({
+    "img": img_history,
+    "text": text_history
+  });
+  saveQRHistory();
+  console.log(qr_history);
 }
 // Check history array
 function checkQRhistory() {
@@ -112,7 +111,7 @@ function checkQRhistory() {
 
       var option = doc.createElement("option");
       var data = qr_history[i].text;
-      option.innerHTML = data;    
+      option.innerHTML = data;
 
       //does not trigger reflow
       fragment.appendChild(option);
@@ -129,40 +128,35 @@ function checkQRhistory() {
     var content = document.createTextNode("Add data the history first");
     theDiv.appendChild(content);
   }
+  $("#choice").click(optionChose);
 }
 
-function optionChose(){
+function optionChose() {
 
-  var choiceValues = $( "#choice" ).val();
+  var choiceValues = $("#choice").val();
   console.log(choiceValues);
   $('#qrcode-href').val(choiceValues);
   renderQRHandler();
-  var a = document.getElementById("qrcode-checkhistory");
-  var b = document.getElementById("return-menu");
-  var x = document.getElementById("main-menu");
-  var y = document.getElementById("history-menu");
-  x.style.display = 'none';
-  y.style.display = 'block';
-  a.style.display = 'none';
-  b.style.display = 'block';
+  hideandseek();
+  hideandseekbuttons();
 
 }
 // Save QR history
-function saveQRHistory(callback){
-	chrome.storage.local.set({qr_history}, function(){
-		if(typeof callback === 'function'){
-			//If there was no callback provided, don't try to call it.
-			callback();
-		}
-	});
+function saveQRHistory(callback) {
+  chrome.storage.local.set({ qr_history }, function () {
+    if (typeof callback === 'function') {
+      //If there was no callback provided, don't try to call it.
+      callback();
+    }
+  });
 }
 
 // Restore QR history
-function getQRHistory(){
-	chrome.storage.local.get({qr_history:[]}, function(data){
-		qr_history = data.qr_history;
-		console.log(qr_history);
-	});
+function getQRHistory() {
+  chrome.storage.local.get({ qr_history: [] }, function (data) {
+    qr_history = data.qr_history;
+    console.log(qr_history);
+  });
 }
 
 function updateContentByTabs(tabs) {
@@ -240,7 +234,7 @@ function hideandseekbuttons() {
   if (a.style.display == 'none') {
     a.style.display = 'block';
     b.style.display = 'none';
-  } else if (a.style.display != 'none'){
+  } else if (a.style.display != 'none') {
     a.style.display = 'none';
     b.style.display = 'block';
   }
