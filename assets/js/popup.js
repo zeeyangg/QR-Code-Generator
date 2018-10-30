@@ -121,15 +121,15 @@ function checkQRhistory() {
 
     var fragment = doc.createDocumentFragment();
 
-    for (i = 0; i < qr_history.length; i++) {
+    for (i = qr_history.length - 1; i >= 0; i--) {
 
+      var setId = (qr_history.length - (i + 1)) * 2;
       var tr = doc.createElement("tr");
-      tr.setAttribute("class", "classsetter");      
+      tr.setAttribute("id", setId);
       var td = doc.createElement("td");
       td.rowSpan = 2;
       var data = "<img src=" + qr_history[i].img + " width='70' height='70'>";
       td.innerHTML = data;
-
 
       tr.appendChild(td);
 
@@ -157,7 +157,6 @@ function checkQRhistory() {
 
     doc.getElementById("history_table").appendChild(table);
   } else {
-    var theDiv = document.getElementById("history_table");
     var tr2 = document.createElement("tr");
     var td2 = document.createElement("td");
     var data2 = "Add data to history first";
@@ -173,10 +172,15 @@ function checkQRhistory() {
     x.style.color = "black";
     x.textContent = "Save to History";
   }
-  $('#history_table').find('tr').on('click', function () {
-    //console.log($(this).text());
+  $('#history_table').find('tr').on('click', function() {
+    if ($(this).index() % 2 == 0) {
+      var clicktext = $(this).text();
+    } else {
+      var newindex = $(this).index() - 1
+      var clicktext = $('#history_table').find("tr[id=" + "'" + newindex + "'" + "]").text();
+    }
     hideandseek();
-    $('#qrcode-href').val($(this).text());
+    $('#qrcode-href').val(clicktext);
     renderQRHandler();
   });
 }
@@ -204,8 +208,7 @@ function clearHistory() {
   qr_history = [];
   saveQRHistory();
   $("#history_table").find("table").remove();
-
-  var theDiv = document.getElementById("history_table");
+  
   var tr2 = document.createElement("tr");
   var td2 = document.createElement("td");
   var data2 = "Add data to history first";
