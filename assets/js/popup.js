@@ -24,7 +24,6 @@ $(function () {
 
 
   chrome.tabs.query({ active: true, currentWindow: true }, updateContentByTabs);
-  //$("#qrcode-regenerate").click(renderQRHandler);
   $("#qrcode-history").click(addQRHistory);
   $("#qrcode-checkhistory").click(hideandseek);
   $("#qrcode-checkhistory").click(checkQRhistory);
@@ -61,14 +60,7 @@ $(function () {
     var check = setInterval(function () {
       if ($('#qrcode-href')) {
         $('#qrcode-href').val(c);
-
-        $('#qrcode-regenerate').click();
-        $('#qrcode-history').click();
-        $('#qrcode-checkhistory').click();
-        $('#qrcode-clear-history').click();
-
         renderQRHandler();
-
         clearInterval(check);
       }
     }, 99);
