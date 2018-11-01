@@ -1,5 +1,9 @@
-# QR Code Generator ![CI status](https://img.shields.io/badge/build-passing-brightgreen.svg)
+# QR Code Generator
 
-QR Code Generator is a Chrome Extension which automatically generates a QR code for the current page you're in.
+QR Code Generator is a Chrome Extension originally developed by Aw Guo.
 
-You can also customise the text field to generate it.
+This is for assignment purposes only. No further development will be made after 1st November 2018.
+
+# Please support the author
+
+[Chrome Extension](https://chrome.google.com/webstore/detail/quick-qr-code-generator/afpbjjgbdimpioenaedcjgkaigggcdpp?hl=en)
